@@ -4,11 +4,14 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -18,6 +21,22 @@ class User
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    private $password;
+
+     /**
      * @ORM\Column(type="string", length=10)
      */
     private $Genre;
@@ -33,19 +52,9 @@ class User
     private $Prenom;
 
     /**
-     * @ORM\Column(type="string", length=320)
-     */
-    private $Email;
-
-    /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=255)
      */
     private $Telephone;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $Password;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -53,7 +62,7 @@ class User
     private $Adresse;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=5)
      */
     private $CP;
 
@@ -62,12 +71,7 @@ class User
      */
     private $Ville;
 
-    /**
-     * @ORM\Column(type="string", length=15)
-     */
-    private $Role;
-
-    /**
+     /**
      * @ORM\Column(type="boolean")
      */
     private $Actif;
@@ -80,7 +84,7 @@ class User
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $UpdatesAt;
+    private $UpdatedAt;
 
     /**
      * @ORM\OneToOne(targetEntity=Entreprise::class, mappedBy="User_id", cascade={"persist", "remove"})
@@ -92,11 +96,68 @@ class User
      */
     private $favori;
 
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string) $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+    
     public function getGenre(): ?string
     {
         return $this->Genre;
@@ -133,18 +194,6 @@ class User
         return $this;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->Email;
-    }
-
-    public function setEmail(string $Email): self
-    {
-        $this->Email = $Email;
-
-        return $this;
-    }
-
     public function getTelephone(): ?string
     {
         return $this->Telephone;
@@ -153,18 +202,6 @@ class User
     public function setTelephone(string $Telephone): self
     {
         $this->Telephone = $Telephone;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->Password;
-    }
-
-    public function setPassword(string $Password): self
-    {
-        $this->Password = $Password;
 
         return $this;
     }
@@ -181,12 +218,12 @@ class User
         return $this;
     }
 
-    public function getCP(): ?int
+    public function getCP(): ?string
     {
         return $this->CP;
     }
 
-    public function setCP(int $CP): self
+    public function setCP(string $CP): self
     {
         $this->CP = $CP;
 
@@ -201,18 +238,6 @@ class User
     public function setVille(string $Ville): self
     {
         $this->Ville = $Ville;
-
-        return $this;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->Role;
-    }
-
-    public function setRole(string $Role): self
-    {
-        $this->Role = $Role;
 
         return $this;
     }
@@ -241,14 +266,14 @@ class User
         return $this;
     }
 
-    public function getUpdatesAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->UpdatesAt;
+        return $this->UpdatedAt;
     }
 
-    public function setUpdatesAt(?\DateTimeInterface $UpdatesAt): self
+    public function setUpdatedAt(?\DateTimeInterface $UpdatedAt): self
     {
-        $this->UpdatesAt = $UpdatesAt;
+        $this->UpdatedAt = $UpdatedAt;
 
         return $this;
     }
@@ -286,5 +311,22 @@ class User
         }
 
         return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }

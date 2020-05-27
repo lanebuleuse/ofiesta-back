@@ -2,12 +2,23 @@ security:
     encoders:
         App\Entity\User:
             algorithm: auto
+        Symfony\Component\Security\Core\User\User:
+            algorithm: auto
+
     
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
 
     providers:
-     # used to reload user from session & other features (e.g. switch_user)
-        users_in_memory: { memory: null }
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+        #users_in_memory:
+        #    memory:
+        #        users:
+        #            # pour tester
+        #            test@test.fr: { password: "$argon2id$v=19$m=65536,t=4,p=1$G1rz1HbBsJlng+WXyKU3Wg$1iMXtf8THk5+3+m8btiA2g4OBJt8zn82hOXPUKZfllM", roles: ['ROLE_ADMIN'] }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -31,6 +42,8 @@ security:
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
+                    - App\Security\LoginFormAuthenticator
+                entry_point: App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
                 # where to redirect after logout
