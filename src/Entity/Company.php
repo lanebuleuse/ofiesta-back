@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CompanyRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ORM\Entity(repositoryClass=CompanyRepository::class)
  */
@@ -23,7 +24,7 @@ class Company
     private $businessName;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      */
     private $siret;
 
@@ -75,12 +76,12 @@ class Company
         return $this;
     }
 
-    public function getSiret(): ?int
+    public function getSiret(): ?string
     {
         return $this->siret;
     }
 
-    public function setSiret(int $siret): self
+    public function setSiret(string $siret): self
     {
         $this->siret = $siret;
 

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ServiceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ServiceRepository::class)
@@ -79,21 +80,27 @@ class Service
     private $company;
 
     /**
-     * @ORM\OneToOne(targetEntity=ServiceList::class, inversedBy="service", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $serviceList;
-
-    /**
      * @ORM\OneToOne(targetEntity=Media::class, mappedBy="service", cascade={"persist", "remove"})
      */
     private $media;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ServiceList::class, inversedBy="services")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ServiceList;
+
+    /**
+     * @Groups("services")
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+     /**
+     * @Groups("services")
+     */
     public function getTitle(): ?string
     {
         return $this->title;
@@ -106,6 +113,9 @@ class Service
         return $this;
     }
 
+     /**
+     * @Groups("services")
+     */
     public function getAddress(): ?string
     {
         return $this->address;
@@ -118,6 +128,9 @@ class Service
         return $this;
     }
 
+     /**
+     * @Groups("services")
+     */
     public function getPostalCode(): ?int
     {
         return $this->postalCode;
@@ -130,6 +143,9 @@ class Service
         return $this;
     }
 
+     /**
+     * @Groups("services")
+     */
     public function getCity(): ?string
     {
         return $this->city;
@@ -142,6 +158,9 @@ class Service
         return $this;
     }
 
+     /**
+     * @Groups("services")
+     */
     public function getDepartment(): ?string
     {
         return $this->department;
@@ -154,6 +173,9 @@ class Service
         return $this;
     }
 
+     /**
+     * @Groups("services")
+     */
     public function getPrice(): ?int
     {
         return $this->price;
@@ -166,6 +188,9 @@ class Service
         return $this;
     }
 
+     /**
+     * @Groups("services")
+     */
     public function getNote(): ?string
     {
         return $this->note;
@@ -178,6 +203,9 @@ class Service
         return $this;
     }
 
+     /**
+     * @Groups("services")
+     */
     public function getMinGuest(): ?int
     {
         return $this->minGuest;
@@ -190,6 +218,9 @@ class Service
         return $this;
     }
 
+     /**
+     * @Groups("services")
+     */
     public function getMaxGuest(): ?int
     {
         return $this->maxGuest;
@@ -202,6 +233,9 @@ class Service
         return $this;
     }
 
+     /**
+     * @Groups("services")
+     */
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -214,6 +248,9 @@ class Service
         return $this;
     }
 
+     /**
+     * @Groups("services")
+     */
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
@@ -226,6 +263,9 @@ class Service
         return $this;
     }
 
+     /**
+     * @Groups("services")
+     */
     public function getCompany(): ?Company
     {
         return $this->company;
@@ -238,18 +278,9 @@ class Service
         return $this;
     }
 
-    public function getServiceList(): ?ServiceList
-    {
-        return $this->serviceList;
-    }
-
-    public function setServiceList(ServiceList $serviceList): self
-    {
-        $this->serviceList = $serviceList;
-
-        return $this;
-    }
-
+     /**
+     * @Groups("services")
+     */
     public function getMedia(): ?Media
     {
         return $this->media;
@@ -264,6 +295,21 @@ class Service
         if ($media->getService() !== $newService) {
             $media->setService($newService);
         }
+
+        return $this;
+    }
+
+     /**
+     * @Groups("services")
+     */
+    public function getServiceList(): ?ServiceList
+    {
+        return $this->ServiceList;
+    }
+
+    public function setServiceList(?ServiceList $ServiceList): self
+    {
+        $this->ServiceList = $ServiceList;
 
         return $this;
     }
