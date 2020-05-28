@@ -23,8 +23,15 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        # main:
-            
+        main:
+            pattern: ^/login
+            guard:
+                authenticator:
+                   - App\Security\LoginFormAuthenticator
+            anonymous: lazy
+            form_login:
+                login_path: login
+                check_path: login
             
         login:
             pattern:  ^/api/login

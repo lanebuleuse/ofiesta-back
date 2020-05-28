@@ -28,8 +28,8 @@ class RegistrationFormType extends AbstractType
                     'Autres' => '3',
                 ],
             ])
-            ->add('nom')
-            ->add('prenom')
+            ->add('name')
+            ->add('firstname')
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -55,10 +55,10 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('adresse')
-            ->add('cp')
-            ->add('ville')
-            ->add('telephone', TelType::class);
+            ->add('address')
+            ->add('postalCode')
+            ->add('city')
+            ->add('phone', TelType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
