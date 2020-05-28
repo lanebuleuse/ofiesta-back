@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    {   
         $builder
             ->add('email')
             ->add('genre', ChoiceType::class, [
@@ -35,9 +35,6 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
-                    ]),
-                    new Email([
-                        'message' => 'You should use an valid email'
                     ])
                 ],
             ])

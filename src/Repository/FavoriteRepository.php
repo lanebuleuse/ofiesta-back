@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Favori;
+use App\Entity\Favorite;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -12,11 +12,11 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Favori[]    findAll()
  * @method Favori[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class FavoriRepository extends ServiceEntityRepository
+class FavoriteRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Favori::class);
+        parent::__construct($registry, Favorite::class);
     }
 
     // /**

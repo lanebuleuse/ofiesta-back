@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\ListePrestation;
+use App\Entity\ServiceList;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -12,11 +12,11 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ListePrestation[]    findAll()
  * @method ListePrestation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ListePrestationRepository extends ServiceEntityRepository
+class ServiceListRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ListePrestation::class);
+        parent::__construct($registry, ServiceList::class);
     }
 
     // /**

@@ -20,125 +20,125 @@ class Message
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Titre;
+    private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Date;
+    private $date;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Texte;
+    private $content;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Nonlu;
+    private $notRead;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Archiver;
+    private $archived;
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $User_id;
+    private $user;
 
     /**
-     * @ORM\OneToOne(targetEntity=Entreprise::class, inversedBy="message", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Company::class, inversedBy="message", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Entreprise_id;
+    private $company;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitre(): ?string
+    public function getTitle(): ?string
     {
-        return $this->Titre;
+        return $this->title;
     }
 
-    public function setTitre(string $Titre): self
+    public function setTitle(string $title): self
     {
-        $this->Titre = $Titre;
+        $this->title = $title;
 
         return $this;
     }
 
     public function getDate(): ?string
     {
-        return $this->Date;
+        return $this->date;
     }
 
-    public function setDate(string $Date): self
+    public function setDate(string $date): self
     {
-        $this->Date = $Date;
+        $this->date = $date;
 
         return $this;
     }
 
-    public function getTexte(): ?string
+    public function getContent(): ?string
     {
-        return $this->Texte;
+        return $this->content;
     }
 
-    public function setTexte(string $Texte): self
+    public function setContent(string $content): self
     {
-        $this->Texte = $Texte;
+        $this->content = $content;
 
         return $this;
     }
 
-    public function getNonlu(): ?bool
+    public function getNotRead(): ?bool
     {
-        return $this->Nonlu;
+        return $this->notRead;
     }
 
-    public function setNonlu(bool $Nonlu): self
+    public function setNotRead(bool $notRead): self
     {
-        $this->Nonlu = $Nonlu;
+        $this->notRead = $notRead;
 
         return $this;
     }
 
-    public function getArchiver(): ?bool
+    public function getArchived(): ?bool
     {
-        return $this->Archiver;
+        return $this->archived;
     }
 
-    public function setArchiver(bool $Archiver): self
+    public function setArchived(bool $archived): self
     {
-        $this->Archiver = $Archiver;
+        $this->archived = $archived;
 
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?User
     {
-        return $this->User_id;
+        return $this->user;
     }
 
-    public function setUserId(User $User_id): self
+    public function setUser(User $user): self
     {
-        $this->User_id = $User_id;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getEntrepriseId(): ?Entreprise
+    public function getCompany(): ?Company
     {
-        return $this->Entreprise_id;
+        return $this->company;
     }
 
-    public function setEntrepriseId(Entreprise $Entreprise_id): self
+    public function setCompany(Company $company): self
     {
-        $this->Entreprise_id = $Entreprise_id;
+        $this->company = $company;
 
         return $this;
     }

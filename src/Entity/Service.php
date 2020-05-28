@@ -20,72 +20,72 @@ class Service
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Titre;
+    private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Adresse;
+    private $address;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $CP;
+    private $postalCode;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Ville;
+    private $city;
 
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $Departement;
+    private $department;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $Prix;
+    private $price;
 
     /**
      * @ORM\Column(type="decimal", precision=1, scale=0)
      */
-    private $Note;
+    private $note;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $MinInvite;
+    private $minGuest;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $MaxInvite;
+    private $maxGuest;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $CreatedAt;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $UpdatedAt;
+    private $updatedAt;
 
     /**
-     * @ORM\OneToOne(targetEntity=Entreprise::class, inversedBy="service", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Company::class, inversedBy="service", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Entreprise_id;
+    private $company;
 
     /**
-     * @ORM\OneToOne(targetEntity=ListePrestation::class, inversedBy="service", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=ServiceList::class, inversedBy="service", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $ListePrestation_id;
+    private $serviceList;
 
     /**
-     * @ORM\OneToOne(targetEntity=Media::class, mappedBy="Service_id", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Media::class, mappedBy="service", cascade={"persist", "remove"})
      */
     private $media;
 
@@ -94,158 +94,158 @@ class Service
         return $this->id;
     }
 
-    public function getTitre(): ?string
+    public function getTitle(): ?string
     {
-        return $this->Titre;
+        return $this->title;
     }
 
-    public function setTitre(string $Titre): self
+    public function setTitle(string $title): self
     {
-        $this->Titre = $Titre;
+        $this->title = $title;
 
         return $this;
     }
 
-    public function getAdresse(): ?string
+    public function getAddress(): ?string
     {
-        return $this->Adresse;
+        return $this->address;
     }
 
-    public function setAdresse(string $Adresse): self
+    public function setAddress(string $address): self
     {
-        $this->Adresse = $Adresse;
+        $this->address = $address;
 
         return $this;
     }
 
-    public function getCP(): ?int
+    public function getPostalCode(): ?int
     {
-        return $this->CP;
+        return $this->postalCode;
     }
 
-    public function setCP(int $CP): self
+    public function setPostalCode(int $postalCode): self
     {
-        $this->CP = $CP;
+        $this->postalCode = $postalCode;
 
         return $this;
     }
 
-    public function getVille(): ?string
+    public function getCity(): ?string
     {
-        return $this->Ville;
+        return $this->city;
     }
 
-    public function setVille(string $Ville): self
+    public function setCity(string $city): self
     {
-        $this->Ville = $Ville;
+        $this->city = $city;
 
         return $this;
     }
 
-    public function getDepartement(): ?string
+    public function getDepartment(): ?string
     {
-        return $this->Departement;
+        return $this->department;
     }
 
-    public function setDepartement(string $Departement): self
+    public function setDepartment(string $department): self
     {
-        $this->Departement = $Departement;
+        $this->department = $department;
 
         return $this;
     }
 
-    public function getPrix(): ?int
+    public function getPrice(): ?int
     {
-        return $this->Prix;
+        return $this->price;
     }
 
-    public function setPrix(int $Prix): self
+    public function setPrice(int $price): self
     {
-        $this->Prix = $Prix;
+        $this->price = $price;
 
         return $this;
     }
 
     public function getNote(): ?string
     {
-        return $this->Note;
+        return $this->note;
     }
 
-    public function setNote(string $Note): self
+    public function setNote(string $note): self
     {
-        $this->Note = $Note;
+        $this->note = $note;
 
         return $this;
     }
 
-    public function getMinInvite(): ?int
+    public function getMinGuest(): ?int
     {
-        return $this->MinInvite;
+        return $this->minGuest;
     }
 
-    public function setMinInvite(int $MinInvite): self
+    public function setMinGuest(int $minGuest): self
     {
-        $this->MinInvite = $MinInvite;
+        $this->minGuest = $minGuest;
 
         return $this;
     }
 
-    public function getMaxInvite(): ?int
+    public function getMaxGuest(): ?int
     {
-        return $this->MaxInvite;
+        return $this->maxGuest;
     }
 
-    public function setMaxInvite(int $MaxInvite): self
+    public function setMaxGuest(int $maxGuest): self
     {
-        $this->MaxInvite = $MaxInvite;
+        $this->maxGuest = $maxGuest;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->CreatedAt;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $CreatedAt): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->CreatedAt = $CreatedAt;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->UpdatedAt;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $UpdatedAt): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
-        $this->UpdatedAt = $UpdatedAt;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getEntrepriseId(): ?Entreprise
+    public function getCompany(): ?Company
     {
-        return $this->Entreprise_id;
+        return $this->company;
     }
 
-    public function setEntrepriseId(Entreprise $Entreprise_id): self
+    public function setCompany(Company $company): self
     {
-        $this->Entreprise_id = $Entreprise_id;
+        $this->company = $company;
 
         return $this;
     }
 
-    public function getListePrestationId(): ?ListePrestation
+    public function getServiceList(): ?ServiceList
     {
-        return $this->ListePrestation_id;
+        return $this->serviceList;
     }
 
-    public function setListePrestationId(ListePrestation $ListePrestation_id): self
+    public function setServiceList(ServiceList $serviceList): self
     {
-        $this->ListePrestation_id = $ListePrestation_id;
+        $this->serviceList = $serviceList;
 
         return $this;
     }
@@ -260,9 +260,9 @@ class Service
         $this->media = $media;
 
         // set (or unset) the owning side of the relation if necessary
-        $newService_id = null === $media ? null : $this;
-        if ($media->getServiceId() !== $newService_id) {
-            $media->setServiceId($newService_id);
+        $newService = null === $media ? null : $this;
+        if ($media->getService() !== $newService) {
+            $media->setService($newService);
         }
 
         return $this;

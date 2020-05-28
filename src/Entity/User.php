@@ -39,80 +39,64 @@ class User implements UserInterface
      /**
      * @ORM\Column(type="string", length=10)
      */
-    private $Genre;
+    private $genre;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $Nom;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $Prenom;
+    private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Telephone;
+    private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Adresse;
+    private $address;
 
     /**
      * @ORM\Column(type="string", length=5)
      */
-    private $CP;
+    private $postalCode;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Ville;
+    private $city;
 
      /**
      * @ORM\Column(type="boolean")
      */
-    private $Actif;
+    private $actif = '1';
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $CreatedAt;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $UpdatedAt;
+    private $updatedAt;
 
     /**
-     * @ORM\OneToOne(targetEntity=Entreprise::class, mappedBy="User_id", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Company::class, mappedBy="user", cascade={"persist", "remove"})
      */
-    private $entreprise;
+    private $company;
 
     /**
-     * @ORM\OneToOne(targetEntity=Favori::class, mappedBy="User_id", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Favorite::class, mappedBy="user", cascade={"persist", "remove"})
      */
-    private $favori;
+    private $favorite;
 
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
+    
 
     /**
      * A visual identifier that represents this user.
@@ -157,161 +141,6 @@ class User implements UserInterface
 
         return $this;
     }
-    
-    public function getGenre(): ?string
-    {
-        return $this->Genre;
-    }
-
-    public function setGenre(string $Genre): self
-    {
-        $this->Genre = $Genre;
-
-        return $this;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->Nom;
-    }
-
-    public function setNom(string $Nom): self
-    {
-        $this->Nom = $Nom;
-
-        return $this;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->Prenom;
-    }
-
-    public function setPrenom(string $Prenom): self
-    {
-        $this->Prenom = $Prenom;
-
-        return $this;
-    }
-
-    public function getTelephone(): ?string
-    {
-        return $this->Telephone;
-    }
-
-    public function setTelephone(string $Telephone): self
-    {
-        $this->Telephone = $Telephone;
-
-        return $this;
-    }
-
-    public function getAdresse(): ?string
-    {
-        return $this->Adresse;
-    }
-
-    public function setAdresse(string $Adresse): self
-    {
-        $this->Adresse = $Adresse;
-
-        return $this;
-    }
-
-    public function getCP(): ?string
-    {
-        return $this->CP;
-    }
-
-    public function setCP(string $CP): self
-    {
-        $this->CP = $CP;
-
-        return $this;
-    }
-
-    public function getVille(): ?string
-    {
-        return $this->Ville;
-    }
-
-    public function setVille(string $Ville): self
-    {
-        $this->Ville = $Ville;
-
-        return $this;
-    }
-
-    public function getActif(): ?bool
-    {
-        return $this->Actif;
-    }
-
-    public function setActif(bool $Actif): self
-    {
-        $this->Actif = $Actif;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->CreatedAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $CreatedAt): self
-    {
-        $this->CreatedAt = $CreatedAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->UpdatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeInterface $UpdatedAt): self
-    {
-        $this->UpdatedAt = $UpdatedAt;
-
-        return $this;
-    }
-
-    public function getEntreprise(): ?Entreprise
-    {
-        return $this->entreprise;
-    }
-
-    public function setEntreprise(Entreprise $entreprise): self
-    {
-        $this->entreprise = $entreprise;
-
-        // set the owning side of the relation if necessary
-        if ($entreprise->getUserId() !== $this) {
-            $entreprise->setUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function getFavori(): ?Favori
-    {
-        return $this->favori;
-    }
-
-    public function setFavori(?Favori $favori): self
-    {
-        $this->favori = $favori;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newUser_id = null === $favori ? null : $this;
-        if ($favori->getUserId() !== $newUser_id) {
-            $favori->setUserId($newUser_id);
-        }
-
-        return $this;
-    }
 
     /**
      * @see UserInterface
@@ -329,4 +158,179 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getGenre(): ?string
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(string $genre): self
+    {
+        $this->genre = $genre;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?string
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(string $postalCode): self
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getActif(): ?bool
+    {
+        return $this->actif;
+    }
+
+    public function setActif(bool $actif): self
+    {
+        $this->actif = $actif;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newUser = null === $company ? null : $this;
+        if ($company->getUser() !== $newUser) {
+            $company->setUser($newUser);
+        }
+
+        return $this;
+    }
+
+    public function getFavorite(): ?Favorite
+    {
+        return $this->favorite;
+    }
+
+    public function setFavorite(?Favorite $favorite): self
+    {
+        $this->favorite = $favorite;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newUser = null === $favorite ? null : $this;
+        if ($favorite->getUser() !== $newUser) {
+            $favorite->setUser($newUser);
+        }
+
+        return $this;
+    }
+
+    
 }
