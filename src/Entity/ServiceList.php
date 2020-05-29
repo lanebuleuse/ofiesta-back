@@ -6,6 +6,7 @@ use App\Repository\ServiceListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ServiceListRepository::class)
@@ -14,13 +15,16 @@ class ServiceList
 {
     /**
      * @ORM\Id()
+     * @Groups("services")
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"services"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"services"})
      */
     private $name;
 

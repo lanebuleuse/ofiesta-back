@@ -15,51 +15,61 @@ class Service
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"services"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"services"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"services"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"services"})
      */
     private $postalCode;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"services"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"services"})
      */
     private $department;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"services"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="decimal", precision=1, scale=0)
+     * @Groups({"services"})
      */
     private $note;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"services"})
      */
     private $minGuest;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"services"})
      */
     private $maxGuest;
 
@@ -76,31 +86,28 @@ class Service
     /**
      * @ORM\OneToOne(targetEntity=Company::class, inversedBy="service", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"services"})
      */
     private $company;
 
     /**
      * @ORM\OneToOne(targetEntity=Media::class, mappedBy="service", cascade={"persist", "remove"})
+     * @Groups({"services"})
      */
     private $media;
 
     /**
      * @ORM\ManyToOne(targetEntity=ServiceList::class, inversedBy="services")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"services"})
      */
     private $ServiceList;
 
-    /**
-     * @Groups("services")
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-     /**
-     * @Groups("services")
-     */
     public function getTitle(): ?string
     {
         return $this->title;
@@ -113,9 +120,6 @@ class Service
         return $this;
     }
 
-     /**
-     * @Groups("services")
-     */
     public function getAddress(): ?string
     {
         return $this->address;
@@ -128,9 +132,6 @@ class Service
         return $this;
     }
 
-     /**
-     * @Groups("services")
-     */
     public function getPostalCode(): ?int
     {
         return $this->postalCode;
@@ -143,9 +144,6 @@ class Service
         return $this;
     }
 
-     /**
-     * @Groups("services")
-     */
     public function getCity(): ?string
     {
         return $this->city;
@@ -158,9 +156,6 @@ class Service
         return $this;
     }
 
-     /**
-     * @Groups("services")
-     */
     public function getDepartment(): ?string
     {
         return $this->department;
@@ -173,9 +168,6 @@ class Service
         return $this;
     }
 
-     /**
-     * @Groups("services")
-     */
     public function getPrice(): ?int
     {
         return $this->price;
@@ -188,9 +180,6 @@ class Service
         return $this;
     }
 
-     /**
-     * @Groups("services")
-     */
     public function getNote(): ?string
     {
         return $this->note;
@@ -203,9 +192,7 @@ class Service
         return $this;
     }
 
-     /**
-     * @Groups("services")
-     */
+
     public function getMinGuest(): ?int
     {
         return $this->minGuest;
@@ -218,9 +205,6 @@ class Service
         return $this;
     }
 
-     /**
-     * @Groups("services")
-     */
     public function getMaxGuest(): ?int
     {
         return $this->maxGuest;
@@ -233,9 +217,7 @@ class Service
         return $this;
     }
 
-     /**
-     * @Groups("services")
-     */
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -248,9 +230,7 @@ class Service
         return $this;
     }
 
-     /**
-     * @Groups("services")
-     */
+
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
@@ -263,9 +243,7 @@ class Service
         return $this;
     }
 
-     /**
-     * @Groups("services")
-     */
+
     public function getCompany(): ?Company
     {
         return $this->company;
@@ -278,9 +256,7 @@ class Service
         return $this;
     }
 
-     /**
-     * @Groups("services")
-     */
+    
     public function getMedia(): ?Media
     {
         return $this->media;
@@ -299,9 +275,7 @@ class Service
         return $this;
     }
 
-     /**
-     * @Groups("services")
-     */
+     
     public function getServiceList(): ?ServiceList
     {
         return $this->ServiceList;
@@ -314,3 +288,4 @@ class Service
         return $this;
     }
 }
+
