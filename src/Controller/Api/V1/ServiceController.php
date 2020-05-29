@@ -9,7 +9,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @Route("/api/v1/services", name="api_v1_services_")
+ * @Route("/api/v1/public/services", name="api_v1_services_")
  */
 class ServiceController extends AbstractController
 {
