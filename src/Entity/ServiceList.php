@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\ServiceListRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ServiceListRepository::class)
@@ -12,20 +15,28 @@ class ServiceList
 {
     /**
      * @ORM\Id()
+     * @Groups("services")
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"services"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"services"})
      */
     private $name;
 
     /**
-     * @ORM\OneToOne(targetEntity=Service::class, mappedBy="serviceList", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Service::class, mappedBy="ServiceList")
      */
-    private $service;
+    private $services;
+
+    public function __construct()
+    {
+        $this->services = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -44,23 +55,34 @@ class ServiceList
         return $this;
     }
 
-    public function getService(): ?Service
+    /**
+     * @return Collection|Service[]
+     */
+    public function getServices(): Collection
     {
-        return $this->service;
+        return $this->services;
     }
 
-    public function setService(?Service $service): self
+    public function addService(Service $service): self
     {
-        $this->service = $service;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newServiceList = null === $service ? null : $this;
-        if ($service->getServiceList() !== $newServiceList) {
-            $service->setServiceList($newServiceList);
+        if (!$this->services->contains($service)) {
+            $this->services[] = $service;
+            $service->setServiceList($this);
         }
 
         return $this;
     }
 
-    
+    public function removeService(Service $service): self
+    {
+        if ($this->services->contains($service)) {
+            $this->services->removeElement($service);
+            // set the owning side to null (unless already changed)
+            if ($service->getServiceList() === $this) {
+                $service->setServiceList(null);
+            }
+        }
+
+        return $this;
+    }    
 }

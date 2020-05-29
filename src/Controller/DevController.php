@@ -2,12 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Admin;
-use App\Entity\Entreprise;
 use App\Entity\User;
-use App\Entity\Service;
-use App\Entity\Message;
-use App\Entity\ListePrestation;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +12,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class DevController extends AbstractController
 {
     /**
-     * @Route("/dev", name="dev")
+     * @Route("/users", name="users", methods={"GET"})
      */
     public function getUsers(UserRepository $userRepository, SerializerInterface $serializer)
     {
@@ -28,5 +23,15 @@ class DevController extends AbstractController
         $arrayUsers = $serializer->normalize($usersList, 'json');
         // dd($arrayUsers);
         return $this->json($arrayUsers);
+    }
+
+    /**
+     * @Route("/users/{id}", name="user", methods={"GET"}, requirements={"id": "\d+"})
+     */
+    public function read(User $user, SerializerInterface $serializer)
+    {
+        $arrayUser = $serializer->normalize($user, 'json');
+
+        return $this->json($arrayUser);
     }
 }

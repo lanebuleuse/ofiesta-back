@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ServiceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ServiceRepository::class)
@@ -14,51 +15,61 @@ class Service
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"services"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"services"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"services"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"services"})
      */
     private $postalCode;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"services"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"services"})
      */
     private $department;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"services"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="decimal", precision=1, scale=0)
+     * @Groups({"services"})
      */
     private $note;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"services"})
      */
     private $minGuest;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"services"})
      */
     private $maxGuest;
 
@@ -75,19 +86,22 @@ class Service
     /**
      * @ORM\OneToOne(targetEntity=Company::class, inversedBy="service", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"services"})
      */
     private $company;
 
     /**
-     * @ORM\OneToOne(targetEntity=ServiceList::class, inversedBy="service", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $serviceList;
-
-    /**
      * @ORM\OneToOne(targetEntity=Media::class, mappedBy="service", cascade={"persist", "remove"})
+     * @Groups({"services"})
      */
     private $media;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ServiceList::class, inversedBy="services")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"services"})
+     */
+    private $ServiceList;
 
     public function getId(): ?int
     {
@@ -178,6 +192,7 @@ class Service
         return $this;
     }
 
+
     public function getMinGuest(): ?int
     {
         return $this->minGuest;
@@ -202,6 +217,7 @@ class Service
         return $this;
     }
 
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -213,6 +229,7 @@ class Service
 
         return $this;
     }
+
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
@@ -226,6 +243,7 @@ class Service
         return $this;
     }
 
+
     public function getCompany(): ?Company
     {
         return $this->company;
@@ -238,18 +256,7 @@ class Service
         return $this;
     }
 
-    public function getServiceList(): ?ServiceList
-    {
-        return $this->serviceList;
-    }
-
-    public function setServiceList(ServiceList $serviceList): self
-    {
-        $this->serviceList = $serviceList;
-
-        return $this;
-    }
-
+    
     public function getMedia(): ?Media
     {
         return $this->media;
@@ -267,4 +274,18 @@ class Service
 
         return $this;
     }
+
+     
+    public function getServiceList(): ?ServiceList
+    {
+        return $this->ServiceList;
+    }
+
+    public function setServiceList(?ServiceList $ServiceList): self
+    {
+        $this->ServiceList = $ServiceList;
+
+        return $this;
+    }
 }
+
