@@ -77,6 +77,7 @@ class AppFixtures extends Fixture
             $service->setNote($faker->numberBetween(0, 5));
             $service->setMaxGuest('300');
             $service->setMinGuest('20');
+            $service->setDescription($faker->text($maxNbChars = 300));
             $service->setCreatedAt($faker->datetime());
 
             $manager->persist($service);

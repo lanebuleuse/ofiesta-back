@@ -103,6 +103,12 @@ class Service
      */
     private $ServiceList;
 
+    /**
+     * @ORM\Column(type="text")
+     * @Groups({"services"})
+     */
+    private $description;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -284,6 +290,18 @@ class Service
     public function setServiceList(?ServiceList $ServiceList): self
     {
         $this->ServiceList = $ServiceList;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
