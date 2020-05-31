@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Company;
 use App\Entity\Service;
+use App\Entity\ServiceList;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -41,36 +42,46 @@ class AppFixtures extends Fixture
 
             $manager->persist($user);
             $users[] = $user;
+     
+
+
+            $company = new Company();
+            $company->setBusinessName($faker->company());
+            $company->setUser($user);
+            $company->setSiret($faker->siret());
+            $company->setCreatedAt($faker->datetime());
+
+
+            $manager->persist($company);
+            $companies[] = $company;
+        
+
+
+            $serviceList = new ServiceList();
+            $serviceList->setName('DJ');
+
+            $manager->persist($serviceList);
+            $serviceLists[] = $serviceList;
+        
+
+
+            $service = new Service();
+            $service->setCompany($company);
+            $service->setServiceList($serviceList);
+            $service->setTitle($faker->company());
+            $service->setAddress($faker->streetAddress());
+            $service->setPostalCode('75000');
+            $service->setCity('Paris');
+            $service->setDepartment('75');
+            $service->setPrice($faker->numberBetween(200, 700));
+            $service->setNote($faker->numberBetween(0, 5));
+            $service->setMaxGuest('300');
+            $service->setMinGuest('20');
+            $service->setCreatedAt($faker->datetime());
+
+            $manager->persist($service);
+            $services[] = $service;
         }
-
-        // for ($i = 0; $i < 10; $i++) {
-        //     $company = new Company();
-        //     $company->setBusinessName($faker->company());
-        //     $company->setSiret($faker->siret());
-        //     $company->setCreatedAt($faker->datetime());
-
-
-        //     $manager->persist($company);
-        //     $companies[] = $company;
-        // }
-
-        // for ($i = 0; $i < 10; $i++) {
-        //     $service = new Service();
-        //     $service->setGenre($faker->title());
-        //     $service->setName($faker->lastName());
-        //     $service->setFirstName($faker->firstName());
-        //     $service->setPhone($faker->phoneNumber());
-        //     $service->setEmail($faker->email());
-        //     $service->setAddress($faker->streetAddress());
-        //     $service->setPostalCode('75000');
-        //     $service->setCity($faker->city());
-        //     $service->setRoles(['ROLE_ADMIN']);
-        //     $service->setActif($faker->numberBetween(0, 1));
-        //     $service->setCreatedAt($faker->datetime());
-
-        //     $manager->persist($service);
-        //     $service[] = $service;
-        // }
 
         $manager->flush();
     }
