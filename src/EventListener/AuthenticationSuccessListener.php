@@ -2,11 +2,23 @@
 
 namespace App\EventListener;
 
+use Doctrine\ORM\EntityManager;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class AuthenticationSuccessListener
 {
+
+    /**
+     * Constructor.
+     *
+     * @param EntityManager $entityManager
+     */
+    public function __construct(EntityManager $entityManager)
+    {
+        $this->em = $entityManager;
+    }
+
     /**
      * @param AuthenticationSuccessEvent $event
      */
@@ -26,6 +38,7 @@ class AuthenticationSuccessListener
 
         // $event->setData($data);
 
+        
         $data = $event->getData();
         $username = $event->getUser() ? $event->getUser()->getUsername() : '';
         $userManager = $this->em->getRepository('UserBundle:User');
