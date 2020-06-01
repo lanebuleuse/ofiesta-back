@@ -12,16 +12,30 @@ class AuthenticationSuccessListener
      */
     public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $event)
     {
+        // $data = $event->getData();
+        // $user = $event->getUser();
+
+        // if (!$user instanceof UserInterface) {
+        //     return;
+        // }
+
+        // $data['data'] = array(
+        //     'roles' => $user->getRoles(),
+        //     'username' => $user->getUsername(),
+        // );
+
+        // $event->setData($data);
+
         $data = $event->getData();
-        $user = $event->getUser();
+        $username = $event->getUser() ? $event->getUser()->getUsername() : '';
+        $userManager = $this->em->getRepository('UserBundle:User');
+        $user = $userManager->findOneBy(['username' => $username]);
 
-        if (!$user instanceof UserInterface) {
-            return;
-        }
-
-        $data['data'] = array(
-            'roles' => $user->getRoles(),
-            'username' => $user->getUsername(),
+        $data['user'] = array(
+            'id'    => $user->getId(),
+            'email' => $user->getEmail(),
+            'name' => $user->getName(),
+            'firstname' => $user->getFirstname(),
         );
 
         $event->setData($data);
