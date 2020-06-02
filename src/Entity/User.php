@@ -17,16 +17,19 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"user_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"user_read"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"user_read"})
      */
     private $roles = [];
 
@@ -38,16 +41,19 @@ class User implements UserInterface
 
      /**
      * @ORM\Column(type="string", length=10)
+     * @Groups({"user_read"})
      */
     private $genre;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"user_read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"user_read"})
      */
     private $firstName;
 
@@ -88,11 +94,13 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToOne(targetEntity=Company::class, mappedBy="user", cascade={"persist", "remove"})
+     * @Groups({"user_read"})
      */
     private $company;
 
     /**
      * @ORM\OneToOne(targetEntity=Favorite::class, mappedBy="user", cascade={"persist", "remove"})
+     * @Groups({"user_read"})
      */
     private $favorite;
 
