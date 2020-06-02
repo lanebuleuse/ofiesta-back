@@ -22,7 +22,7 @@ class Company
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"services"})
+     * @Groups({"services", "user_read"})
      */
     private $businessName;
 
