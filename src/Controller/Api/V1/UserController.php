@@ -8,8 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @Route("/als
- * pi/v1/public/users", name="api_v1_users_")
+ * @Route("/api/v1/public/users", name="api_v1_users_")
  */
 class UserController extends AbstractController
 {
