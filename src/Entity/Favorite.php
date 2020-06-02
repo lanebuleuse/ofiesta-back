@@ -15,7 +15,6 @@ class Favorite
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"user_read"})
      */
     private $id;
 

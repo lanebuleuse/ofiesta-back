@@ -16,7 +16,7 @@ class Company
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"services", "user_read"})
+     * @Groups({"services"})
      */
     private $id;
 
