@@ -105,6 +105,7 @@ class Service
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"services"})
      */
     private $description;
 
@@ -305,4 +306,3 @@ class Service
         return $this;
     }
 }
-
