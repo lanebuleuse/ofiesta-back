@@ -24,7 +24,7 @@ class ServiceList
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"services"})
+     * @Groups({"services", "services_list"})
      */
     private $name;
 

@@ -3,53 +3,55 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\RegistrationFormType;
-use App\Security\LoginFormAuthenticator;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Component\Serializer\SerializerInterface;
 
+/**
+ * @Route("/register", name="app_register", methods={"POST"})
+ */
 class RegistrationController extends AbstractController
 {
     /**
-     * @Route("/register", name="app_register")
+     * @Route("/user", name="app_register", methods={"POST"})
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
+    public function add(Request $request, SerializerInterface $serializer, UserPasswordEncoderInterface $encoder)
     {
-        $user = new User();
-        $user->setCreatedAt(new \DateTime());
-        $user->setUpdatedAt(new \DateTime());
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
+        // On crée un nouvel objet à partir du JSON reçu
+        $jsonData = json_decode($request->getContent());
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('password')->getData()
-                )
-            );
+        // On crée un nouveau User
+        $user = new User();        
+        // On attribue les valeurs :
+        $user->setEmail($jsonData->email);
+        $user->setPassword($encoder->encodePassword($user, $jsonData->password));
+        $user->setGenre($jsonData->genre);
+        $user->setName($jsonData->name);
+        $user->setFirstName($jsonData->firstName);
+        $user->setPhone($jsonData->phone);
+        $user->setAddress($jsonData->address);
+        $user->setPostalCode($jsonData->postalCode);
+        $user->setCity($jsonData->city);
+        $user->setActif((bool) 1);
+        $user->setCreatedAt(new DateTime('NOW'));
+        $user->setRoles(['ROLE_USER']);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+        // On periste
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
 
-            // do anything else you need here, like send an email
-
-            return $guardHandler->authenticateUserAndHandleSuccess(
+        return $this->json(
+            // On sérialise l'objet qui vient d'être créé
+            $serializer->normalize(
                 $user,
-                $request,
-                $authenticator,
-                'api' // firewall name in security.yaml
-            );
-        }
-
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-        ]);
+                null,
+                ['groups' => 'user_read']
+            ),
+            201 // On précise le code de status de réponse pour confirmer que le service est ajouté
+        );
     }
 }

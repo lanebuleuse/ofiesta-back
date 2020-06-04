@@ -19,10 +19,11 @@ class ServiceController extends AbstractController
     /**
      * @Route("", name="browse", methods={"GET"})
      */
-    public function Browse(ServiceRepository $serviceRepository, SerializerInterface $serializer)
+    public function Browse(ServiceRepository $serviceRepository, SerializerInterface $serializer, Request $request)
     {
-        // On récupère tous les users, ce sont des objets Service classiques
-        $services = $serviceRepository->findAll();
+        $page = $request->query->get('page', 1);
+
+        $services = $serviceRepository->findPaginated($page);
 
         // On demande au Serializer de normaliser nos services
         $arrayServices = $serializer->normalize($services, null, ['groups' => 'services']);
@@ -80,5 +81,4 @@ class ServiceController extends AbstractController
             201 // On précise le code de status de réponse pour confirmer que le film est ajouté
         );
     }
-
 }

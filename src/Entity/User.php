@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -104,12 +106,17 @@ class User implements UserInterface
     private $company;
 
     /**
-     * @ORM\OneToOne(targetEntity=Favorite::class, mappedBy="user", cascade={"persist", "remove"})
-     * @Groups({"user_read"})
+     * @ORM\ManyToMany(targetEntity=Service::class)
+     * @ORM\JoinTable(name="favorites")
      */
-    private $favorite;
+    private $favorites;
 
-    
+    public function __construct()
+    {
+        $this->favorites = new ArrayCollection();
+    }
+
+   
 
     /**
      * A visual identifier that represents this user.
@@ -327,23 +334,30 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getFavorite(): ?Favorite
+    /**
+     * @return Collection|Service[]
+     */
+    public function getFavorites(): Collection
     {
-        return $this->favorite;
+        return $this->favorites;
     }
 
-    public function setFavorite(?Favorite $favorite): self
+    public function addFavorite(Service $favorite): self
     {
-        $this->favorite = $favorite;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newUser = null === $favorite ? null : $this;
-        if ($favorite->getUser() !== $newUser) {
-            $favorite->setUser($newUser);
+        if (!$this->favorites->contains($favorite)) {
+            $this->favorites[] = $favorite;
         }
 
         return $this;
     }
 
+    public function removeFavorite(Service $favorite): self
+    {
+        if ($this->favorites->contains($favorite)) {
+            $this->favorites->removeElement($favorite);
+        }
+
+        return $this;
+    }
     
 }
