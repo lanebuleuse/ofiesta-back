@@ -57,11 +57,6 @@ class Company
      */
     private $message;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Favorite::class, mappedBy="company", cascade={"persist", "remove"})
-     */
-    private $favorite;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -163,21 +158,4 @@ class Company
         return $this;
     }
 
-    public function getFavorite(): ?Favorite
-    {
-        return $this->favorite;
-    }
-
-    public function setFavorite(?Favorite $favorite): self
-    {
-        $this->favorite = $favorite;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newCompany = null === $favorite ? null : $this;
-        if ($favorite->getCompany() !== $newCompany) {
-            $favorite->setCompany($newCompany);
-        }
-
-        return $this;
-    }
 }

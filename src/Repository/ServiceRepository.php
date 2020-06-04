@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Service;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,11 +15,31 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ServiceRepository extends ServiceEntityRepository
 {
+    const COUNT_PER_PAGE = 12;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Service::class);
     }
 
+    public function findPaginated(int $page): array
+    {
+        $query = $this->createQueryBuilder('s');
+        $query->setFirstResult(self::COUNT_PER_PAGE * ($page - 1));
+        $query->setMaxResults(self::COUNT_PER_PAGE);
+
+        $paginator = new Paginator(
+            $query,
+            true
+        );
+
+        return [
+            'current_page' => $page,
+            'count_per_page' => self::COUNT_PER_PAGE,
+            'count_pages' => floor(count($paginator) / self::COUNT_PER_PAGE + 1), // c'est chelou ça le +1
+            'results' => $paginator->getIterator()->getArrayCopy(),
+        ];
+    }
     // /**
     //  * @return Service[] Returns an array of Service objects
     //  */
