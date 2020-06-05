@@ -20,19 +20,19 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"user_read"})
+     * @Groups({"user_read", "pro_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"user_read"})
+     * @Groups({"user_read", "pro_read"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"user_read"})
+     * @Groups({"user_read", "pro_read"})
      */
     private $roles = [];
 
@@ -42,45 +42,39 @@ class User implements UserInterface
      */
     private $password;
 
-     /**
-     * @ORM\Column(type="string", length=10)
-     * @Groups({"user_read"})
-     */
-    private $genre;
-
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups({"user_read"})
+     * @Groups({"user_read", "pro_read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups({"user_read"})
+     * @Groups({"user_read", "pro_read"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user_read"})
+     * @Groups({"user_read", "pro_read"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user_read"})
+     * @Groups({"user_read", "pro_read"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=5)
-     * @Groups({"user_read"})
+     * @Groups({"user_read", "pro_read"})
      */
     private $postalCode;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user_read"})
+     * @Groups({"user_read", "pro_read"})
      */
     private $city;
 
@@ -101,7 +95,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToOne(targetEntity=Company::class, mappedBy="user", cascade={"persist", "remove"})
-     * @Groups({"user_read"})
+     * @Groups({"pro_read"})
      */
     private $company;
 
@@ -192,18 +186,6 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getGenre(): ?string
-    {
-        return $this->genre;
-    }
-
-    public function setGenre(string $genre): self
-    {
-        $this->genre = $genre;
 
         return $this;
     }

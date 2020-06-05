@@ -31,6 +31,22 @@ class AppFixtures extends Fixture
         $serviceLists = [];
         // $messages = [];
 
+        //user test
+        $user = new User();
+        $user->setName('test');
+        $user->setFirstName('test');
+        $user->setPhone($faker->phoneNumber());
+        $user->setEmail('test@test.test');
+        // Password: 147258
+        $user->setPassword('$argon2id$v=19$m=65536,t=4,p=1$G1rz1HbBsJlng+WXyKU3Wg$1iMXtf8THk5+3+m8btiA2g4OBJt8zn82hOXPUKZfllM');
+        $user->setAddress($faker->streetAddress());
+        $user->setPostalCode('75000');
+        $user->setCity($faker->city());
+        $user->setRoles(['ROLE_ADMIN']);
+        $user->setActif(1);
+        $user->setCreatedAt($faker->datetime());
+        $manager->persist($user);
+        $users[] = $user;
 
         $serviceList = new ServiceList();
         $serviceList->setName('DJ');
@@ -62,11 +78,20 @@ class AppFixtures extends Fixture
         $manager->persist($serviceList);
         $serviceLists[] = $serviceList;
 
+        $serviceList = new ServiceList();
+        $serviceList->setName('Pâtissier');
+        $manager->persist($serviceList);
+        $serviceLists[] = $serviceList;
+
+        $serviceList = new ServiceList();
+        $serviceList->setName('Décorateur');
+        $manager->persist($serviceList);
+        $serviceLists[] = $serviceList;
+
         $manager->flush();
 
         for ($i = 0; $i < 30; $i++) {
             $user = new User();
-            $user->setGenre($faker->title());
             $user->setName($faker->lastName());
             $user->setFirstName($faker->firstName());
             $user->setPhone($faker->phoneNumber());
@@ -90,7 +115,7 @@ class AppFixtures extends Fixture
 
             $service = new Service();
             $service->setCompany($company);
-            $service->setServiceList($serviceLists[$faker->numberBetween(0, 5)]);
+            $service->setServiceList($serviceLists[$faker->numberBetween(0, 7)]);
             $service->setTitle($faker->company());
             $service->setAddress($faker->streetAddress());
             $service->setPostalCode('75000');

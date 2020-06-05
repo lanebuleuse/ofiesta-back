@@ -22,12 +22,13 @@ class Company
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"services", "user_read"})
+     * @Groups({"services", "user_read", "pro_read"})
      */
     private $businessName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"pro_read"})
      */
     private $siret;
 
@@ -49,6 +50,7 @@ class Company
 
     /**
      * @ORM\OneToOne(targetEntity=Service::class, mappedBy="company", cascade={"persist", "remove"})
+     * @Groups({"company_read"})
      */
     private $service;
 

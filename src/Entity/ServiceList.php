@@ -18,13 +18,13 @@ class ServiceList
      * @Groups("services")
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"services"})
+     * @Groups({"services", "company_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"services", "services_list"})
+     * @Groups({"services", "services_list", "company_read"})
      */
     private $name;
 

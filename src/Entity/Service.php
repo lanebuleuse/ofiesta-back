@@ -15,61 +15,61 @@ class Service
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"services"})
+     * @Groups({"services", "company_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"services"})
+     * @Groups({"services", "company_read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"services"})
+     * @Groups({"services", "company_read"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"services"})
+     * @Groups({"services", "company_read"})
      */
     private $postalCode;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"services"})
+     * @Groups({"services", "company_read"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"services"})
+     * @Groups({"services", "company_read"})
      */
     private $department;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"services"})
+     * @Groups({"services", "company_read"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="decimal", precision=1, scale=0)
-     * @Groups({"services"})
+     * @Groups({"services", "company_read"})
      */
     private $note;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"services"})
+     * @Groups({"services", "company_read"})
      */
     private $minGuest;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"services"})
+     * @Groups({"services", "company_read"})
      */
     private $maxGuest;
 
@@ -99,13 +99,13 @@ class Service
     /**
      * @ORM\ManyToOne(targetEntity=ServiceList::class, inversedBy="services")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"services"})
+     * @Groups({"services", "company_read"})
      */
     private $ServiceList;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"services"})
+     * @Groups({"services", "company_read"})
      */
     private $description;
 
