@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CompanyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -49,15 +51,20 @@ class Company
     private $user;
 
     /**
-     * @ORM\OneToOne(targetEntity=Service::class, mappedBy="company", cascade={"persist", "remove"})
-     * @Groups({"company_read"})
-     */
-    private $service;
-
-    /**
      * @ORM\OneToOne(targetEntity=Message::class, mappedBy="company", cascade={"persist", "remove"})
      */
     private $message;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Service::class, mappedBy="company")
+     * @Groups({"pro_read"})
+     */
+    private $service;
+
+    public function __construct()
+    {
+        $this->service = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -124,24 +131,6 @@ class Company
         return $this;
     }
 
-    public function getService(): ?Service
-    {
-        return $this->service;
-    }
-
-    public function setService(?Service $service): self
-    {
-        $this->service = $service;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newCompany = null === $service ? null : $this;
-        if ($service->getCompany() !== $newCompany) {
-            $service->setCompany($newCompany);
-        }
-
-        return $this;
-    }
-
     public function getMessage(): ?Message
     {
         return $this->message;
@@ -155,6 +144,37 @@ class Company
         $newCompany = null === $message ? null : $this;
         if ($message->getCompany() !== $newCompany) {
             $message->setCompany($newCompany);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Service[]
+     */
+    public function getService(): Collection
+    {
+        return $this->service;
+    }
+
+    public function addService(Service $service): self
+    {
+        if (!$this->service->contains($service)) {
+            $this->service[] = $service;
+            $service->setCompany($this);
+        }
+
+        return $this;
+    }
+
+    public function removeService(Service $service): self
+    {
+        if ($this->service->contains($service)) {
+            $this->service->removeElement($service);
+            // set the owning side to null (unless already changed)
+            if ($service->getCompany() === $this) {
+                $service->setCompany(null);
+            }
         }
 
         return $this;

@@ -15,61 +15,61 @@ class Service
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"services", "company_read"})
+     * @Groups({"services", "pro_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"services", "company_read"})
+     * @Groups({"services", "pro_read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"services", "company_read"})
+     * @Groups({"services", "pro_read"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"services", "company_read"})
+     * @Groups({"services", "pro_read"})
      */
     private $postalCode;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"services", "company_read"})
+     * @Groups({"services", "pro_read"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"services", "company_read"})
+     * @Groups({"services", "pro_read"})
      */
     private $department;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"services", "company_read"})
+     * @Groups({"services", "pro_read"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="decimal", precision=1, scale=0)
-     * @Groups({"services", "company_read"})
+     * @Groups({"services", "pro_read"})
      */
     private $note;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"services", "company_read"})
+     * @Groups({"services", "pro_read"})
      */
     private $minGuest;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"services", "company_read"})
+     * @Groups({"services", "pro_read"})
      */
     private $maxGuest;
 
@@ -84,13 +84,6 @@ class Service
     private $updatedAt;
 
     /**
-     * @ORM\OneToOne(targetEntity=Company::class, inversedBy="service", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     * @Groups({"services"})
-     */
-    private $company;
-
-    /**
      * @ORM\OneToOne(targetEntity=Media::class, mappedBy="service", cascade={"persist", "remove"})
      * @Groups({"services"})
      */
@@ -99,15 +92,22 @@ class Service
     /**
      * @ORM\ManyToOne(targetEntity=ServiceList::class, inversedBy="services")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"services", "company_read"})
+     * @Groups({"services", "pro_read"})
      */
     private $ServiceList;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"services", "company_read"})
+     * @Groups({"services", "pro_read"})
      */
     private $description;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Company::class, inversedBy="service")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"services"})
+     */
+    private $company;
 
     public function getId(): ?int
     {
@@ -248,20 +248,6 @@ class Service
 
         return $this;
     }
-
-
-    public function getCompany(): ?Company
-    {
-        return $this->company;
-    }
-
-    public function setCompany(Company $company): self
-    {
-        $this->company = $company;
-
-        return $this;
-    }
-
     
     public function getMedia(): ?Media
     {
@@ -302,6 +288,18 @@ class Service
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
 
         return $this;
     }
