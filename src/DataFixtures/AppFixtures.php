@@ -42,7 +42,7 @@ class AppFixtures extends Fixture
         $user->setAddress($faker->streetAddress());
         $user->setPostalCode('75000');
         $user->setCity($faker->city());
-        $user->setRoles(['ROLE_ADMIN']);
+        $user->setRoles(['ROLE_MEMBER']);
         $user->setActif(1);
         $user->setCreatedAt($faker->datetime());
         $manager->persist($user);

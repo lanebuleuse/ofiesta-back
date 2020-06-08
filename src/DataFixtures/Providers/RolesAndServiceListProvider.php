@@ -7,24 +7,12 @@ use Faker\Provider\Base as BaseProvider;
 class RolesAndServiceListProvider extends BaseProvider
 {
     protected static $roles = [
-        'ROLE_USER',
+        'ROLE_MEMBER',
         'ROLE_ADMIN',
-        'ROLE_PRESTATAIRE',
+        'ROLE_PROVIDER',
     ];
 
-    protected static $serviceListItems = [
-        'DJ',
-        'Traiteurs',
-        'Location de Salle',
-        'Decorateurs'
-    ];
-   
     public static function userRole(){
         return static::randomElement(static::$roles);
     }
-
-    public static function serviceList(){
-        return static::randomElement(static::$serviceListItems);
-    }
-
 }
