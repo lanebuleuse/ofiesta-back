@@ -75,6 +75,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/v1/public, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/v1/secure,       roles: [IS_AUTHENTICATED_FULLY, ROLE_MEMBER] } 
         - { path: ^/api/v1/pro,       roles: [IS_AUTHENTICATED_FULLY, ROLE_PROVIDER] }
